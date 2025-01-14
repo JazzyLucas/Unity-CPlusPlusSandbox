@@ -173,3 +173,8 @@ UserSettings/Search.settings
 Builds/
 Assets/Plugins/JazzyLucas/Editor/AssetReferenceScriptGeneratorConfig.asset
 Assets/Plugins/JazzyLucas/Editor/AssetReferenceScriptGeneratorConfig.asset.meta
+
+#
+# Following a LICENSE to not redistribute JazzyLucas Core
+#
+/Assets/Plugins/JazzyLucas
