@@ -8,12 +8,11 @@ using UnityEditor;
 using UnityEngine;
 using L = JazzyLucas.Core.Utils.Logger;
 
-public class BuildPlugin
+public static class BuildPlugin
 {
-    [MenuItem("Tools/Build C++ Plugin")]
+    [MenuItem("PluginTest/Build C++")]
     public static void BuildCppPlugin()
     {
-        // Paths
         string projectRoot = Application.dataPath;
         string cppFile = Path.Combine(projectRoot, "Plugins/PluginTesting/UnityPlugin.cpp");
         string outputDir = Path.Combine(projectRoot, "Plugins/PluginTesting");
@@ -21,7 +20,6 @@ public class BuildPlugin
         
         L.Log($"System PATH: {Environment.GetEnvironmentVariable("PATH")}");
 
-        // Ensure the output directory exists
         if (!Directory.Exists(outputDir))
             Directory.CreateDirectory(outputDir);
 
@@ -29,7 +27,6 @@ public class BuildPlugin
         string compiler = "g++"; // Change to `cl` for MSVC or `clang` for macOS/Linux
         string args = $"-shared -o \"{outputFile}\" \"{cppFile}\" -std=c++17";
 
-        // Run the build process
         Process process = new()
         {
             StartInfo = new()
@@ -55,9 +52,20 @@ public class BuildPlugin
             else
                 L.Log(LogSeverity.ERROR, $"C++ Plugin build failed:\n{error}");
         }
-        catch (System.Exception ex)
+        catch (Exception ex)
         {
             L.Log(LogSeverity.ERROR, $"Failed to build plugin: {ex.Message}");
+        }
+    }
+    
+    [MenuItem("PluginTest/Delete C++")]
+    public static void DeletePlugin()
+    {
+        var pluginPath = Path.Combine(Application.dataPath, "Plugins/PluginTesting/UnityPlugin.dll");
+        if (File.Exists(pluginPath))
+        {
+            File.Delete(pluginPath);
+            L.Log("Plugin deleted successfully.");
         }
     }
 }
